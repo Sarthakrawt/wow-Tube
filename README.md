@@ -82,11 +82,3 @@
 
 ## 3️⃣ Configure Environment Variables
 
-
-Submit a pull request
-
-📜 License
-
-This project is licensed under the MIT License.
-
-💡 WowTube is a showcase project combining video-sharing, playlists, tweets, and subscriptions — built to demonstrate full-stack development skills.
