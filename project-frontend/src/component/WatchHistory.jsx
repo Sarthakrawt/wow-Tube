@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserWatchHistory } from "../lib/api";
+import { deleteVideoWatchHistory, getUserWatchHistory } from "../lib/api";
 import { useDispatch } from "react-redux";
 import { addVideo } from "../store/videoSlice";
 import { useNavigate } from "react-router";
@@ -7,6 +7,7 @@ import Profile from "./Profile";
 
 function WatchHistory() {
   const [videos, setVideos] = useState([]);
+  const [count , setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,8 +25,11 @@ function WatchHistory() {
       }
     }
     UserHistory();
-  }, []);
-
+  }, [count]);
+ const deleteHistory = async(videoId)=>{
+  await deleteVideoWatchHistory(videoId);
+  setCount(count + 1)
+ }
   return (
     <div className="w-screen min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-sky-100 font-[Quicksand] p-8">
         <div className="flex flex-row justify-between">
@@ -42,16 +46,17 @@ function WatchHistory() {
             <div
               key={indx}
               className="bg-white border-4 border-black rounded-2xl shadow-[5px_5px_0px_black] hover:scale-[1.03] transition-transform duration-300 overflow-hidden cursor-pointer"
-              onClick={() => {
-                dispatch(addVideo({ videoId: video }));
-                navigate("/video");
-              }}
+            
             >
               {/* Thumbnail */}
               <img
                 className="h-48 w-full object-cover border-b-4 border-black"
                 src={video.thumbnail}
                 alt="no thumbnail"
+                  onClick={() => {
+                dispatch(addVideo({ videoId: video }));
+                navigate("/video");
+              }}
               />
 
               {/* Info */}
@@ -69,7 +74,7 @@ function WatchHistory() {
                 <p className="text-sm font-[Quicksand] text-gray-700 line-clamp-2">
                   {video.description || "No description available"}
                 </p>
-                 <button className="sticky left-full w-10 hover:transition hover:scale-150  hover:duration-200 hover:delay-100"> &#10006;</button>
+                 <button className="sticky left-full w-10 hover:transition hover:scale-150  hover:duration-200 hover:delay-100 font-bold" onClick={()=>{deleteHistory(video._id)}}>X</button>
               </div>
              
             </div>
