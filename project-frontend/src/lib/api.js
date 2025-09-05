@@ -108,6 +108,15 @@ async function logout(){
       }
     }
 
+    async function deleteVideoWatchHistory(videoId){
+      try {
+        const res = await axiosInstance.delete(`delete-video-watchHistory/${videoId}`);
+        console.log("success fully deeted to watch history ");
+      } catch (error) {
+        console.log("Error at addTo watch History ", error)
+      }
+    }
+ 
 
 
 // dashboard
@@ -185,6 +194,7 @@ async function addVideoView(videoId){
     const res = await axiosInstanceSub.get(`/toggle/${channelId}`, {
       withCredentials: true,
     });
+    // console.log("user subscriber" , res.data);
     return res.data; // { success: true, subscribed: true/false }
   } catch (error) {
     console.error("Error checking subscription:", error.response?.data || error.message);
@@ -382,5 +392,7 @@ export {
      getAllLikes,
      ToggleTweetLike,
      ToggleCommentLike,
+     deleteVideoWatchHistory
     }
+
 

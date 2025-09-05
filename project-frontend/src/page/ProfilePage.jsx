@@ -71,7 +71,7 @@ function ProfilePage() {
                 <div className='flex flex-row justify-between items-center gap-10'>
                 <Link to="/about" className="h-13 items-center flex justify-center w-30 shadow-[6px_6px_0px_black] rounded-full bg-purple-400 hover:scale-110 active:shadow-[1px_1px_0px_black] border-4 border-black active:translate-y-2 hover:rotate-2">about</Link>
               <Link
-          className="bg-yellow-400 hover:bg-yellow-500 h-13 items-center flex justify-center w-30 shadow-[6px_6px_0px_black] rounded-full hover:scale-110 active:shadow-[1px_1px_0px_black] border-4 border-black active:translate-y-2 hover:rotate-2 h-13 "
+          className="bg-yellow-400 hover:bg-yellow-500 h-13 items-center flex justify-center w-30 shadow-[6px_6px_0px_black] rounded-full hover:scale-110 active:shadow-[1px_1px_0px_black] border-4 border-black active:translate-y-2 hover:rotate-2 "
           to="/video-upload"
         >
           Upload Video 

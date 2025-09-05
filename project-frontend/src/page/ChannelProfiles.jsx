@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { channelStates, getChannelSubscribers, getChannelTweets, getUsersChannelVideos, toggleSubscription } from '../lib/api.js';
+import { authUser, channelStates, getChannelSubscribers, getChannelTweets, getUsersChannelVideos, toggleSubscription } from '../lib/api.js';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -9,9 +9,19 @@ function ChannelProfiles() {
   const [totalLikes, setTotalLikes] = useState(0);
   const [allVideos, setAllVideos] = useState(0);
   const [subscribed, setSubscribed] = useState(false);
+  const [sub , setsub] = useState("");
   const[tweets, setTweets] = useState([]);
   const video = useSelector((state) => state.video.videoId);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    async function fetchUser(){
+   const user = await authUser();
+   if(user) setsub(user.data);
+  
+    }
+    fetchUser();
+  },[])
 
   useEffect(() => {
     async function fetchVideoChannel() {
@@ -46,16 +56,25 @@ function ChannelProfiles() {
 console.log("toogle Sbuscription", res);
 setSubscribed(prev => !prev);
   };
+
   useEffect(()=>{
     async function fetchSubsriber(){
       console.log("working")
     const res = await getChannelSubscribers(video.owner._id);
-    setSubscribed(res?.data.length> 0 ? true : false);
+    console.log("this subscriber",res.data)
+     console.log("user " ,sub)
+    if(res) {
+      console.log("if tk tho ah rha h ")
+      for(let val of res.data){
+      console.log( val.subscriber.username + " subscriber in both ways " + sub.username)
+      setSubscribed(val.subscriber.username === sub.username ? true : false);
+      }
+    }
    console.log("in fetch Subsriber",res.data.length)
   }
   if(video.owner._id) fetchSubsriber();
 }
-  ,[video]);
+  ,[video,sub]);
 
   useEffect(()=>{
     async function getTweet(){
